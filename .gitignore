@@ -1,0 +1,49 @@
+# Eclipse
+.classpath
+.project
+.settings/
+
+# Intellij
+.idea/
+*.iml
+*.iws
+
+# Mac
+.DS_Store
+
+# Maven
+/log/
+/target/
+
+# AoT build
+/dist/
+/coverage/
+
+# Other log files
+/logs/
+
+# Automated pom rewriting often leaves a backup
+/pom.xml.bak
+
+# Gradle
+/.gradle/
+/build/
+
+# A Gradle/IntelliJ/Tomcat combination uses this folder to deploy files
+/classes/
+
+# npm
+node_modules/
+npm-debug.log
+
+# JSPM
+jspm_packages/
+
+# TypeScript typings
+typings/
+
+# Local app engine
+local-db/
+
+# Generated reports
+/jgiven-reports/
