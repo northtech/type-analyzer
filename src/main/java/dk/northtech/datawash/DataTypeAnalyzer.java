@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 @ParametersAreNonnullByDefault
 public class DataTypeAnalyzer {
@@ -46,36 +47,27 @@ public class DataTypeAnalyzer {
   }
   
   /**
-   @param dataSet an iterable of maps from String to Object, each map representing a row in the data
+   @param dataStream an iterable of maps from String to Object, each map representing a row in the data
    @return immutable result object
    */
-  public Result analyze(Iterable<Map<String, Object>> dataSet) {
-    Map<String, ColumnAnalyzer> columnAnalyzers = new HashMap<>();
+  public Result analyze(final Collection<Map<String, Object>> dataStream) {
+    final Map<String, ColumnAnalyzer> columnAnalyzers = new ConcurrentHashMap<>();
     
-    for (Map<String, Object> row : dataSet) {
-      for (String key : row.keySet()) {
-        analyzeValue(key, row.get(key), columnAnalyzers);
-      }
-    }
+    dataStream.parallelStream().forEach(row -> analyzeRow(row, columnAnalyzers));
     
-    Set<ColumnResult> columnResults = new HashSet<>();
-    for (ColumnAnalyzer columnAnalyzer : columnAnalyzers.values()) {
-      columnResults.add(columnAnalyzer.getResult());
-    }
+    final Map<String, Integer>              amountOfValues  = new HashMap<>();
+    final Map<String, Map<Class, Integer>>  typeCounts      = new HashMap<>();
+    final Map<String, Integer>              nullCounts      = new HashMap<>();
+    final Map<String, Class>                bestFits        = new HashMap<>();
+    final Map<String, Map<Class, Double>>   confidences     = new HashMap<>();
     
-    Map<String, Integer> amountOfValues = new HashMap<>();
-    Map<String, Map<Class, Integer>> typeCounts = new HashMap<>();
-    Map<String, Integer> nullCounts = new HashMap<>();
-    Map<String, Class> bestFits = new HashMap<>();
-    Map<String, Map<Class, Double>> confidences = new HashMap<>();
-    
-    for (ColumnResult columnResult : columnResults) {
+    columnAnalyzers.values().stream().map(ColumnAnalyzer::getResult).forEach(columnResult -> {
       amountOfValues.put(columnResult.columnId, columnResult.totalCount);
       typeCounts.put(columnResult.columnId, columnResult.typeCounts);
       nullCounts.put(columnResult.columnId, columnResult.nullCount);
       bestFits.put(columnResult.columnId, columnResult.bestFit);
       confidences.put(columnResult.columnId, columnResult.confidences);
-    }
+    });
     
     return new Result(
       columnAnalyzers.keySet(),
@@ -90,19 +82,28 @@ public class DataTypeAnalyzer {
       columnTolerance);
   }
   
-  private void analyzeValue(final String key, @Nullable final Object value, final Map<String, ColumnAnalyzer> columnAnalyzers) {
-    LOGGER.debug("Analyzing key: {}, value: {}", key, value);
+  private void analyzeRow(final Map<String, Object> row, final Map<String, ColumnAnalyzer> columnAnalyzers) {
+    row.keySet().parallelStream().forEach(k -> analyzeValue(k, row.get(k), columnAnalyzers));
+  }
+  
+  private void analyzeValue(final String columnId, @Nullable final Object value, final Map<String, ColumnAnalyzer> columnAnalyzers) {
+    LOGGER.debug("Analyzing key: {}, value: {}", columnId, value);
     
-    columnAnalyzers.computeIfAbsent(key, k -> {
-      final Boolean localNullable = this.columnNullable.getOrDefault(key, this.nullable);
-      final Double localTolerance = this.columnTolerance.getOrDefault(key, this.tolerance);
-      
-      final Collection<List<Class>> localHierarchies = this.columnHierarchies.getOrDefault(key, new LinkedList<>());
-      final Map<Class, DataTypeScanner> localScanners = this.columnScanners.getOrDefault(key, new HashMap<>());
-      
-      localHierarchies.addAll(this.hierarchies);
-      localScanners.putAll(this.scanners);
-      return new ColumnAnalyzer(key, localHierarchies, localScanners, localTolerance, localNullable);
-    }).analyze(value);
+    columnAnalyzers.computeIfAbsent(columnId, this::createColumnAnalyzer).analyze(value);
+  }
+  
+  private ColumnAnalyzer createColumnAnalyzer(final String columnId) {
+    LOGGER.debug("Creating ColumnAnalyzer for column: {}", columnId);
+    
+    final Boolean localNullable = this.columnNullable.getOrDefault(columnId, this.nullable);
+    final Double localTolerance = this.columnTolerance.getOrDefault(columnId, this.tolerance);
+  
+    final Collection<List<Class>> localHierarchies = this.columnHierarchies.getOrDefault(columnId, new LinkedList<>());
+    final Map<Class, DataTypeScanner> localScanners = this.columnScanners.getOrDefault(columnId, new HashMap<>());
+  
+    localHierarchies.addAll(this.hierarchies);
+    localScanners.putAll(this.scanners);
+    
+    return new ColumnAnalyzer(columnId, localHierarchies, localScanners, localTolerance, localNullable);
   }
 }
