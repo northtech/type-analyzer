@@ -9,13 +9,6 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public abstract class DataTypeScanner<T> {
   private static final Logger LOGGER = LoggerFactory.getLogger(IntegerScanner.class);
   
-  private final Class type;
-  
-  
-  DataTypeScanner(Class type) {
-    this.type = type;
-  }
-  
   
   public abstract boolean scan(Object value);
   
@@ -26,7 +19,7 @@ public abstract class DataTypeScanner<T> {
    @param value object to be converted
    @return argument converted to scanner's type
    */
-  T convert(Object value) {
+  public T convert(Object value) {
     LOGGER.warn("convert() is not implemented for this scanner");
     return null;
   }

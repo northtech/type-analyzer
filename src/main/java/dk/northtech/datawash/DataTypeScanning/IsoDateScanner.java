@@ -10,10 +10,6 @@ import java.time.Instant;
 public class IsoDateScanner extends DataTypeScanner<Instant> {
   private static final Logger LOGGER = LoggerFactory.getLogger(IsoDateScanner.class);
   
-  public IsoDateScanner() {
-    super(Instant.class);
-  }
-  
   
   @Override
   public boolean scan(Object value) {

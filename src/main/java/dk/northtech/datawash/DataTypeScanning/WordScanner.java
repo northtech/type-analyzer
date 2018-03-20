@@ -13,10 +13,6 @@ public class WordScanner extends DataTypeScanner<WordScanner.Word> {
   private StringScanner stringScanner = null;
   
   
-  public WordScanner() {
-    super(Word.class);
-  }
-  
   @Override
   public boolean scan(Object value) {
     if (stringScanner == null) {

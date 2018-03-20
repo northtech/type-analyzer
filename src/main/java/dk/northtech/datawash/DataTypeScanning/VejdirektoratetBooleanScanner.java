@@ -9,10 +9,6 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class VejdirektoratetBooleanScanner extends DataTypeScanner<Boolean> {
   private static final Logger LOGGER = LoggerFactory.getLogger(VejdirektoratetBooleanScanner.class);
   
-  VejdirektoratetBooleanScanner() {
-    super(Boolean.class);
-  }
-  
   @Override
   public boolean scan(Object value) {
     return false;

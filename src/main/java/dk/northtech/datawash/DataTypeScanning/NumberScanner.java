@@ -9,9 +9,6 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class NumberScanner extends DataTypeScanner<Number> {
   private static final Logger LOGGER = LoggerFactory.getLogger(NumberScanner.class);
   
-  public NumberScanner() {
-    super(Number.class);
-  }
   
   @Override
   public boolean scan(Object value) {
