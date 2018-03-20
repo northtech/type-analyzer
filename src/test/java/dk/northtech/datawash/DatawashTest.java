@@ -4,6 +4,8 @@ import com.tngtech.jgiven.junit5.ScenarioTest;
 import dk.northtech.datawash.stages.AnalyzerActions;
 import dk.northtech.datawash.stages.AnalyzerOutcome;
 import dk.northtech.datawash.stages.AnalyzerState;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +15,28 @@ import java.time.Instant;
 
 public class DatawashTest extends ScenarioTest<AnalyzerState<?>, AnalyzerActions<?>, AnalyzerOutcome<?>> {
   private static final Logger LOGGER = LoggerFactory.getLogger(DatawashTest.class);
+  
+  @BeforeEach
+  void doSomething() {
+  
+  }
+  
+  @Test
+  @Tag("slow")
+  void hugeDataList() {
+    given()
+      .a_memory_list_of_Map_objects()
+      .and().the_list_contains_object(pair("col0", 0), pair("col1", 1), pair("col2", 2))
+      .and().the_list_contains_object(pair("col0", 0.0), pair("col1", 1.1), pair("col2", 2.2))
+      .the_list_is_HUGE(23) // MAX 23 PLEASE
+      
+      .and().the_analyzer_recognizes(Integer.class, Double.class)
+      .and().the_analyzer_is_instantiated();
+    when()
+      .the_list_is_analyzed();
+    then()
+      .the_result_contains_columns("col0", "col1", "col2");
+  }
   
   @Test
   void aggregatesColumns() {
@@ -67,6 +91,7 @@ public class DatawashTest extends ScenarioTest<AnalyzerState<?>, AnalyzerActions
   }
   
   @Test
+  @Tag("DataType")
   void recognizesIsoDates() {
     // I have included this as an example of a more "advanced" data type than the built-in primitives,
     // to highlight how we need to be able to plug in scanners for arbitrary types.

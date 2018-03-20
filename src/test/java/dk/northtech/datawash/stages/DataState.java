@@ -21,9 +21,19 @@ public class DataState<SELF extends DataState<SELF>> extends Stage<SELF> {
   
   @ProvidedScenarioState
   List<Map<String, Object>> dataList;
+
   
   public SELF a_memory_list_of_Map_objects() {
     dataList = new ArrayList<>();
+    return self();
+  }
+  
+  public SELF the_list_is_HUGE(int magnitude) {
+  
+    for (int i = 0; i < magnitude; i++) {
+      dataList.addAll(dataList);
+    }
+    
     return self();
   }
   
