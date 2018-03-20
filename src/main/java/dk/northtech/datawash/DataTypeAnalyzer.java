@@ -8,6 +8,7 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Stream;
 
 @ParametersAreNonnullByDefault
 public class DataTypeAnalyzer {
@@ -47,20 +48,20 @@ public class DataTypeAnalyzer {
   }
   
   /**
-   @param dataStream an iterable of maps from String to Object, each map representing a row in the data
+   @param dataStream a Stream of Maps from String to Object, each Map represents a row in the data
    @return immutable result object
    */
-  public Result analyze(final Collection<Map<String, Object>> dataStream) {
+  public Result analyze(final Stream<Map<String, Object>> dataStream) {
     final Map<String, ColumnAnalyzer> columnAnalyzers = new ConcurrentHashMap<>();
-    
-    dataStream.parallelStream().forEach(row -> analyzeRow(row, columnAnalyzers));
-    
+  
+    dataStream.parallel().forEach(row -> analyzeRow(row, columnAnalyzers));
+  
     final Map<String, Integer>              amountOfValues  = new HashMap<>();
     final Map<String, Map<Class, Integer>>  typeCounts      = new HashMap<>();
     final Map<String, Integer>              nullCounts      = new HashMap<>();
     final Map<String, Class>                bestFits        = new HashMap<>();
     final Map<String, Map<Class, Double>>   confidences     = new HashMap<>();
-    
+  
     columnAnalyzers.values().stream().map(ColumnAnalyzer::getResult).forEach(columnResult -> {
       amountOfValues.put(columnResult.columnId, columnResult.totalCount);
       typeCounts.put(columnResult.columnId, columnResult.typeCounts);
@@ -68,7 +69,7 @@ public class DataTypeAnalyzer {
       bestFits.put(columnResult.columnId, columnResult.bestFit);
       confidences.put(columnResult.columnId, columnResult.confidences);
     });
-    
+  
     return new Result(
       columnAnalyzers.keySet(),
       amountOfValues,
@@ -80,6 +81,14 @@ public class DataTypeAnalyzer {
       columnNullable,
       tolerance,
       columnTolerance);
+  }
+  
+  /**
+   @param dataCollection A Collection of Maps from String to Object, each Map represents a row in the data
+   @return immutable result object
+   */
+  public Result analyze(final Collection<Map<String, Object>> dataCollection) {
+    return analyze(dataCollection.stream());
   }
   
   private void analyzeRow(final Map<String, Object> row, final Map<String, ColumnAnalyzer> columnAnalyzers) {
