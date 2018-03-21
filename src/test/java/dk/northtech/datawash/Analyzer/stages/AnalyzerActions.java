@@ -1,10 +1,10 @@
-package dk.northtech.datawash.stages;
+package dk.northtech.datawash.Analyzer.stages;
 
 import com.tngtech.jgiven.Stage;
 import com.tngtech.jgiven.annotation.ExpectedScenarioState;
 import com.tngtech.jgiven.annotation.ProvidedScenarioState;
-import dk.northtech.datawash.DataTypeAnalyzer;
-import dk.northtech.datawash.Result;
+import dk.northtech.datawash.Analyzer.DataTypeAnalyzer;
+import dk.northtech.datawash.Analyzer.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

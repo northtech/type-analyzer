@@ -1,4 +1,4 @@
-package dk.northtech.datawash;
+package dk.northtech.datawash.Analyzer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
