@@ -20,7 +20,7 @@ class ColumnAnalyzer {
   
   private final Map<Class, DataTypeScanner> scanners = new HashMap<>();
   private final Collection<List<Class>> hierarchies = new LinkedList<>();
-  private final Map<Class, Integer> typeCounts = new ConcurrentHashMap<>();
+  private final Map<Class, AtomicInteger> typeCounts = new HashMap<>();
   
   
   private AtomicInteger totalCount = new AtomicInteger(0);
@@ -33,6 +33,12 @@ class ColumnAnalyzer {
     this.columnId = columnId;
     this.tolerance = tolerance;
     this.nullable = nullable;
+    
+    for (List<Class> hierarchy : hierarchies) {
+      for (Class type : hierarchy) {
+        typeCounts.put(type, new AtomicInteger(0));
+      }
+    }
   }
   
   ColumnResult getResult() {
@@ -42,7 +48,7 @@ class ColumnAnalyzer {
     
     for (List<Class> hierarchy : hierarchies) {
       for (Class type : hierarchy) {
-        Integer count = typeCounts.getOrDefault(type, 0);
+        Integer count = typeCounts.get(type).get();
         confidences.put(type, (double) count / (double) totalCount.get());
       }
     }
@@ -94,7 +100,6 @@ class ColumnAnalyzer {
   }
   
   private void typeCountIncrement(Class type) {
-    typeCounts.computeIfPresent(type, (k, v) -> v + 1);
-    typeCounts.putIfAbsent(type, 1);
+    typeCounts.get(type).incrementAndGet();
   }
 }

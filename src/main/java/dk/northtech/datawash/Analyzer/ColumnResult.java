@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @ParametersAreNonnullByDefault
 public class ColumnResult {
@@ -24,7 +25,7 @@ public class ColumnResult {
   ColumnResult(String columnId,
                Integer totalCount,
                Integer nullCount,
-               Map<Class, Integer> typeCounts,
+               Map<Class, AtomicInteger> typeCounts,
                Map<Class, Double> confidences,
                @Nullable Class bestFit,
                Double tolerance,
@@ -33,7 +34,7 @@ public class ColumnResult {
     this.columnId = columnId;
     this.totalCount = totalCount;
     this.nullCount = nullCount;
-    this.typeCounts.putAll(typeCounts);
+    typeCounts.keySet().forEach(k -> this.typeCounts.put(k, typeCounts.get(k).get()));
     this.confidences.putAll(confidences);
     this.tolerance = tolerance;
     this.nullable = nullable;
