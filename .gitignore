@@ -21,6 +21,8 @@
 
 # Other log files
 /logs/
+hs_err_pid*
+*.log
 
 # Automated pom rewriting often leaves a backup
 /pom.xml.bak
