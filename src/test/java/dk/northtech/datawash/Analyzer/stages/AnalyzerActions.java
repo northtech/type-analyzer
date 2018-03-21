@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 @ParametersAreNonnullByDefault
 public class AnalyzerActions<SELF extends AnalyzerActions<SELF>> extends Stage<SELF> {
@@ -18,6 +19,9 @@ public class AnalyzerActions<SELF extends AnalyzerActions<SELF>> extends Stage<S
   
   @ExpectedScenarioState
   List<Map<String, Object>> dataList;
+  
+  @ExpectedScenarioState
+  Stream<Map<String, Object>> dataStream;
   
   @ExpectedScenarioState
   DataTypeAnalyzer analyzer;
@@ -28,6 +32,11 @@ public class AnalyzerActions<SELF extends AnalyzerActions<SELF>> extends Stage<S
   public SELF the_list_is_analyzed() {
     // TODO: This should do something with the data and analyzer, and prepare a result object the Outcome stage can inspect.
     result = analyzer.analyze(dataList);
+    return self();
+  }
+  
+  public SELF the_stream_is_analyzed() {
+    result = analyzer.analyze(dataStream);
     return self();
   }
 }

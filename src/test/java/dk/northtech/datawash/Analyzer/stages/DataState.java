@@ -8,10 +8,9 @@ import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -21,19 +20,34 @@ public class DataState<SELF extends DataState<SELF>> extends Stage<SELF> {
   
   @ProvidedScenarioState
   List<Map<String, Object>> dataList;
-
   
-  public SELF a_memory_list_of_Map_objects() {
-    dataList = new ArrayList<>();
+  @ProvidedScenarioState
+  Stream<Map<String, Object>> dataStream;
+  
+  SampleSpliterator spliterator;
+  
+  public SELF a_spliterator_of_Map_objects() {
+    spliterator = new SampleSpliterator();
     return self();
   }
   
-  public SELF the_list_is_HUGE(int magnitude) {
+  public SELF the_spliterator_produces_rows_containing_object(String k, @Nullable Object v) {
+    spliterator.templateRow.put(k, v);
+    return self();
+  }
   
-    for (int i = 0; i < magnitude; i++) {
-      dataList.addAll(dataList);
-    }
-    
+  public SELF the_spliterator_produces_$_elements(Long size) {
+    spliterator.remainingElements = size;
+    return self();
+  }
+  
+  public SELF the_spliterator_is_turned_into_a_Stream() {
+    dataStream = StreamSupport.stream(spliterator, false);
+    return self();
+  }
+  
+  public SELF a_memory_list_of_Map_objects() {
+    dataList = new ArrayList<>();
     return self();
   }
   
