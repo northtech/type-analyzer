@@ -1,27 +1,24 @@
 package dk.northtech.datawash.Analyzer.DataTypeScanning;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import javax.annotation.ParametersAreNonnullByDefault;
 
+/**
+ * This interface defines two methods. The first is for {@code ColumnAnalyzers} to use when scanning Objects, the
+ * other is for the {@code DataTypeAnalyzerBuilder} to use when setting scanners.
+ */
 @ParametersAreNonnullByDefault
-public abstract class DataTypeScanner<T> {
-  private static final Logger LOGGER = LoggerFactory.getLogger(IntegerScanner.class);
-  
-  
-  public abstract boolean scan(Object value);
+public interface DataTypeScanner {
+  /**
+   * @param value the Object to scan.
+   *
+   * @return true if the given Object is of the type that this scanner scans for.
+   */
+  boolean scan(Object value);
   
   /**
-   * Assumes the argument is of a compatible format
-   * Converts the value to the correct type
+   * Gets the specific type that a scanner scans for.
    *
-   * @param value object to be converted
-   *
-   * @return argument converted to scanner's type
+   * @return the Class that this scanner scans for.
    */
-  public T convert(Object value) {
-    LOGGER.warn("convert() is not implemented for this scanner");
-    return null;
-  }
+  Class getType();
 }

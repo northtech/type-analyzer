@@ -6,24 +6,54 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
-public class DoubleScanner extends DataTypeScanner<Double> {
+public class DoubleScanner implements DataTypeScanner {
   private static final Logger LOGGER = LoggerFactory.getLogger(DoubleScanner.class);
   
   
   @Override
   public boolean scan(Object value) {
-    LOGGER.debug("Testing if value: {} is a Double", value);
     if (value instanceof Double) {
-      LOGGER.debug("value: {} is instance of Double", value);
       return true;
     }
     
-    LOGGER.debug("value: {} is not a Double", value);
+    try {
+      Number  valueAsNumber;
+      Double  valueAsDouble;
+      
+      valueAsNumber = (Number) value;
+      valueAsDouble = valueAsNumber.doubleValue();
+      
+      if (valueAsNumber.equals(valueAsDouble)) {
+        return true;
+      }
+    }
+    catch (ClassCastException cce) {
+    
+    }
+  
+    try {
+      CharSequence valueAsCharSequence;
+      String       valueAsString;
+    
+      valueAsCharSequence = (CharSequence) value;
+      valueAsString = valueAsCharSequence.toString();
+    
+    
+      Double.parseDouble(valueAsString);
+    
+      return true; // wont be reached if .parseDouble() throws exception
+    
+    
+    }
+    catch (RuntimeException re) {
+    
+    }
+    
     return false;
   }
   
   @Override
-  public Double convert(Object value) {
-    return null;
+  public Class getType() {
+    return Double.class;
   }
 }

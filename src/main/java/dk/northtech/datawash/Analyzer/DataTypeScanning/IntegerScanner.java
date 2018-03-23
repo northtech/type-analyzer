@@ -6,71 +6,56 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
-public class IntegerScanner extends DataTypeScanner<Integer> {
+public class IntegerScanner implements DataTypeScanner {
   private static final Logger LOGGER = LoggerFactory.getLogger(IntegerScanner.class);
   
   
   @Override
   public boolean scan(Object value) {
-    LOGGER.debug("Testing if value: {} is an Integer", value);
-    
     if (value instanceof Integer) {
-      LOGGER.debug("value: {} is instance of Integer", value);
       return true;
     }
     
-    Number  valueAsNumber  = null;
-    Integer valueAsInteger = null;
-    Double  valueAsDouble  = null;
-    
     try {
+      Number  valueAsNumber;
+      Integer valueAsInteger;
+      Double  valueAsDouble;
+      
       valueAsNumber = (Number) value;
       valueAsInteger = valueAsNumber.intValue();
       valueAsDouble = valueAsNumber.doubleValue();
-    }
-    catch (ClassCastException cce) {
-      LOGGER.debug("value: {} not castable to Number", value);
-    }
-    
-    if (valueAsNumber != null && valueAsInteger != null && valueAsDouble != null &&
-        valueAsInteger.doubleValue() == valueAsDouble) {
-      LOGGER.debug("value: {} as Integer has same value if Double", value);
-      return true;
-    }
-    
-    CharSequence valueAsCharSequence = null;
-    String       valueAsString       = null;
-    Integer      parsedInteger       = null;
-    
-    try {
-      valueAsCharSequence = (CharSequence) value;
-      valueAsString = valueAsCharSequence.toString();
-    }
-    catch (ClassCastException cce) {
-      LOGGER.debug("" + value.toString() + " not castable to CharSequence");
-    }
-    
-    if (valueAsString != null) {
-      try {
-        parsedInteger = Integer.parseInt(valueAsString);
-      }
-      catch (NumberFormatException nfe) {
-        LOGGER.debug("valueAsString: {} not parsable to Integer", valueAsString);
-      }
       
-      if (parsedInteger != null) {
+      if (valueAsInteger.doubleValue() == valueAsDouble) {
         return true;
       }
     }
+    catch (ClassCastException cce) {
     
-    LOGGER.debug("value: {} is not an Integer", value);
+    }
+    
+    try {
+      CharSequence valueAsCharSequence;
+      String       valueAsString;
+      
+      valueAsCharSequence = (CharSequence) value;
+      valueAsString = valueAsCharSequence.toString();
+  
+
+      Integer.parseInt(valueAsString);
+  
+      return true; // wont be reached if .parseInt() throws exception
+      
+      
+    }
+    catch (RuntimeException re) {
+    
+    }
+    
     return false;
   }
   
   @Override
-  public Integer convert(Object value) {
-    return null;
+  public Class getType() {
+    return Integer.class;
   }
-  
-  
 }

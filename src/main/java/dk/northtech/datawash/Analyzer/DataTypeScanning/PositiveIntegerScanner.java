@@ -6,13 +6,25 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
-public class PositiveIntegerScanner extends DataTypeScanner<PositiveIntegerScanner.PositiveInteger> {
+public class PositiveIntegerScanner implements DataTypeScanner {
   private static final Logger LOGGER = LoggerFactory.getLogger(PositiveIntegerScanner.class);
   
   
   @Override
   public boolean scan(Object value) {
+    IntegerScanner integerScanner = new IntegerScanner();
+    
+    if (integerScanner.scan(value)) {
+      Integer valueAsInteger = (Integer) value;
+      return valueAsInteger >= 0;
+    }
+    
     return false;
+  }
+  
+  @Override
+  public Class getType() {
+    return PositiveInteger.class;
   }
   
   @ParametersAreNonnullByDefault

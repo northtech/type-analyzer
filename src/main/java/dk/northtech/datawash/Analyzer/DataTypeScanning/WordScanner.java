@@ -8,7 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @ParametersAreNonnullByDefault
-public class WordScanner extends DataTypeScanner<WordScanner.Word> {
+public class WordScanner implements DataTypeScanner {
   private static final Logger        LOGGER        = LoggerFactory.getLogger(WordScanner.class);
   private              StringScanner stringScanner = null;
   
@@ -19,7 +19,7 @@ public class WordScanner extends DataTypeScanner<WordScanner.Word> {
       stringScanner = new StringScanner();
     }
     if (stringScanner.scan(value)) {
-      String  valueAsString = stringScanner.convert(value);
+      String  valueAsString = value.toString();
       Pattern pattern       = Pattern.compile("$\\w+^");
       Matcher matcher       = pattern.matcher(valueAsString);
       
@@ -30,11 +30,8 @@ public class WordScanner extends DataTypeScanner<WordScanner.Word> {
   }
   
   @Override
-  public Word convert(Object value) {
-    if (stringScanner == null) {
-      stringScanner = new StringScanner();
-    }
-    return new Word(stringScanner.convert(value));
+  public Class getType() {
+    return Word.class;
   }
   
   @ParametersAreNonnullByDefault

@@ -10,7 +10,7 @@ import java.time.Instant;
 import java.time.format.DateTimeParseException;
 
 @ParametersAreNonnullByDefault
-public class IsoDateScanner extends DataTypeScanner<Instant> {
+public class IsoDateScanner implements DataTypeScanner {
   private static final Logger LOGGER = LoggerFactory.getLogger(IsoDateScanner.class);
   
   
@@ -23,5 +23,10 @@ public class IsoDateScanner extends DataTypeScanner<Instant> {
     catch (DateTimeParseException e) {
       return false;
     }
+  }
+  
+  @Override
+  public Class getType() {
+    return Instant.class;
   }
 }
