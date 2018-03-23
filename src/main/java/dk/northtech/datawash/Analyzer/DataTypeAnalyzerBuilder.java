@@ -101,14 +101,7 @@ public class DataTypeAnalyzerBuilder {
       }
     }
     
-    return new DataTypeAnalyzer(
-      this.hierarchies,
-      this.columnHierarchies,
-      this.scanners,
-      this.columnScanners,
-      this.tolerance,
-      this.columnTolerances,
-      this.nullable,
-      this.columnNullable);
+    return new DataTypeAnalyzer(this.hierarchies, this.columnHierarchies, this.scanners, this.columnScanners,
+                                this.tolerance, this.columnTolerances, this.nullable, this.columnNullable);
   }
 }

@@ -21,14 +21,8 @@ public class ColumnResult {
   final Boolean nullable;
   final Class   bestFit;
   
-  ColumnResult(String columnId,
-               Integer totalCount,
-               Integer nullCount,
-               Map<Class, Integer> typeCounts,
-               Map<Class, Double> confidences,
-               @Nullable Class bestFit,
-               Double tolerance,
-               Boolean nullable) {
+  ColumnResult(String columnId, Integer totalCount, Integer nullCount, Map<Class, Integer> typeCounts,
+               Map<Class, Double> confidences, @Nullable Class bestFit, Double tolerance, Boolean nullable) {
     
     this.columnId = columnId;
     this.totalCount = totalCount;

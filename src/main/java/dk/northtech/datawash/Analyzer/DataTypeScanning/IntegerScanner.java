@@ -32,7 +32,8 @@ public class IntegerScanner extends DataTypeScanner<Integer> {
       LOGGER.debug("value: {} not castable to Number", value);
     }
     
-    if (valueAsNumber != null && valueAsInteger != null && valueAsInteger.doubleValue() == valueAsDouble) {
+    if (valueAsNumber != null && valueAsInteger != null && valueAsDouble != null &&
+        valueAsInteger.doubleValue() == valueAsDouble) {
       LOGGER.debug("value: {} as Integer has same value if Double", value);
       return true;
     }

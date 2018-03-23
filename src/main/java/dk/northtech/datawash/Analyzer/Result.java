@@ -27,15 +27,9 @@ public class Result {
   private final Boolean nullable;
   
   
-  Result(Set<String> columns,
-         Map<String, Integer> amountOfValues,
-         Map<String, Integer> nullCounts,
-         Map<String, Map<Class, Integer>> typeCounts,
-         Map<String, Map<Class, Double>> confidences,
-         Map<String, Class> bestFits,
-         Boolean nullable,
-         Map<String, Boolean> columnNullable,
-         Double tolerance,
+  Result(Set<String> columns, Map<String, Integer> amountOfValues, Map<String, Integer> nullCounts,
+         Map<String, Map<Class, Integer>> typeCounts, Map<String, Map<Class, Double>> confidences,
+         Map<String, Class> bestFits, Boolean nullable, Map<String, Boolean> columnNullable, Double tolerance,
          Map<String, Double> columnTolerance) {
     
     this.columns.addAll(columns);

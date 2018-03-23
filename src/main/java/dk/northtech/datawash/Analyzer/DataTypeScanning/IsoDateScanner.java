@@ -17,9 +17,8 @@ public class IsoDateScanner extends DataTypeScanner<Instant> {
   @Override
   public boolean scan(Object value) {
     try {
-      return (InstantTypeAdapterFactory.parse(value) != null) || (ZonedDateTimeTypeAdapterFactory.parse(value
-                                                                                                          .toString()) !=
-                                                                  null);
+      return (InstantTypeAdapterFactory.parse(value) != null) ||
+             (ZonedDateTimeTypeAdapterFactory.parse(value.toString()) != null);
     }
     catch (DateTimeParseException e) {
       return false;

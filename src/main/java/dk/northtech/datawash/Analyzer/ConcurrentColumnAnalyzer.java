@@ -25,8 +25,8 @@ public class ConcurrentColumnAnalyzer implements ColumnAnalyzerInterface {
   private       List<ColumnAnalyzer>    columnAnalyzers     = new ArrayList<>();
   private       Integer                 columnAnalyzerIndex = 0;
   
-  public ConcurrentColumnAnalyzer(String columnId, Collection<List<Class>> hierarchies, Map<Class, DataTypeScanner>
-    scanners, Double tolerance, Boolean nullable) {
+  public ConcurrentColumnAnalyzer(String columnId, Collection<List<Class>> hierarchies,
+                                  Map<Class, DataTypeScanner> scanners, Double tolerance, Boolean nullable) {
     this.hierarchies.addAll(hierarchies);
     this.columnId = columnId;
     this.tolerance = tolerance;
@@ -48,8 +48,8 @@ public class ConcurrentColumnAnalyzer implements ColumnAnalyzerInterface {
   
   @Override
   public ColumnResult getResult() {
-    List<ColumnResult> columnResults = columnAnalyzers.stream().map(ColumnAnalyzer::getResult).collect(Collectors
-                                                                                                         .toList());
+    List<ColumnResult> columnResults =
+      columnAnalyzers.stream().map(ColumnAnalyzer::getResult).collect(Collectors.toList());
     
     final Map<Class, Integer> totalTypeCounts = new HashMap<>();
     Integer                   totalTotalCount = 0;
@@ -71,8 +71,8 @@ public class ConcurrentColumnAnalyzer implements ColumnAnalyzerInterface {
     Map<Class, Double> confidences = calculateConfidences(totalTypeCounts, totalTotalCount);
     Class              bestFit     = getBestFit(confidences);
     
-    return new ColumnResult(columnId, totalTotalCount, totalNullCount, totalTypeCounts, confidences, bestFit,
-                            tolerance, nullable);
+    return new ColumnResult(columnId, totalTotalCount, totalNullCount, totalTypeCounts, confidences, bestFit, tolerance,
+                            nullable);
   }
   
   private Map<Class, Double> calculateConfidences(Map<Class, Integer> typeCounts, Integer totalCount) {
