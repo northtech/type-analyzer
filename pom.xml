@@ -74,6 +74,11 @@
       <version>2.15.0</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>dk.northtech.gson-extensions</groupId>
+      <artifactId>northtech-gson-java-types</artifactId>
+      <version>2.1.0</version>
+    </dependency>
   </dependencies>
 
   <build>
@@ -182,6 +187,14 @@
       <id>osgeo</id>
       <name>GeoTools official</name>
       <url>http://download.osgeo.org/webdav/geotools/</url>
+    </repository>
+    <repository>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>northtech</id>
+      <name>NorthTech repository</name>
+      <url>http://m2.northtech.dk/content/repositories/releases/</url>
     </repository>
   </repositories>
 </project>
