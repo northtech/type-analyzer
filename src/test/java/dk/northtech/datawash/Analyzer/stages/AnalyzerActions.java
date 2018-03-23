@@ -30,7 +30,8 @@ public class AnalyzerActions<SELF extends AnalyzerActions<SELF>> extends Stage<S
   Result result;
   
   public SELF the_list_is_analyzed() {
-    // TODO: This should do something with the data and analyzer, and prepare a result object the Outcome stage can inspect.
+    // TODO: This should do something with the data and analyzer, and prepare a result object the Outcome stage can
+    // inspect.
     result = analyzer.analyze(dataList);
     return self();
   }

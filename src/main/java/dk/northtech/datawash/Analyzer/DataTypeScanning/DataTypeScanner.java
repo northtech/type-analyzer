@@ -13,11 +13,12 @@ public abstract class DataTypeScanner<T> {
   public abstract boolean scan(Object value);
   
   /**
-   Assumes the argument is of a compatible format
-   Converts the value to the correct type
-   
-   @param value object to be converted
-   @return argument converted to scanner's type
+   * Assumes the argument is of a compatible format
+   * Converts the value to the correct type
+   *
+   * @param value object to be converted
+   *
+   * @return argument converted to scanner's type
    */
   public T convert(Object value) {
     LOGGER.warn("convert() is not implemented for this scanner");

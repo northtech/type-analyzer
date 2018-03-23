@@ -36,7 +36,7 @@ public class DatawashTest extends ScenarioTest<AnalyzerState<?>, AnalyzerActions
       .and().the_spliterator_produces_rows_containing_object("col7", 7)
       .and().the_spliterator_produces_rows_containing_object("col8", 8)
       .and().the_spliterator_produces_rows_containing_object("col9", 9)
-      .and().the_spliterator_produces_$_elements(60_000_000L)
+      .and().the_spliterator_produces_$_elements(1_000_000L)
       .and().the_spliterator_is_turned_into_a_Stream()
       
       .and().the_analyzer_recognizes(Integer.class, Double.class)
@@ -87,7 +87,7 @@ public class DatawashTest extends ScenarioTest<AnalyzerState<?>, AnalyzerActions
   
   @Test
   void findsBestDataType() {
-  
+    
     final String columnName = "bestDataType";
     given()
       .a_memory_list_of_Map_objects()
@@ -110,7 +110,7 @@ public class DatawashTest extends ScenarioTest<AnalyzerState<?>, AnalyzerActions
     // to highlight how we need to be able to plug in scanners for arbitrary types.
     // Talk to me before writing the actual string analysis for recognizing the ISO format; I have most
     // of it already.
-  
+    
     final String columnName = "IsoDates";
     given()
       .a_memory_list_of_Map_objects()
@@ -127,7 +127,8 @@ public class DatawashTest extends ScenarioTest<AnalyzerState<?>, AnalyzerActions
     then()
       .the_number_of_values_in_column_$_which_are_assignable_to_class_$_is_$(columnName, Instant.class, 3)
       // Arguably, it is not good style to test for two things at the same time, but on the other hand,
-      // we want to test the code with null-values sprinkled in, so we might as well do the check when we have them anyway:
+      // we want to test the code with null-values sprinkled in, so we might as well do the check when we have them
+      // anyway:
       .and().the_number_of_null_values_in_column_$_is_$(columnName, 1);
   }
   

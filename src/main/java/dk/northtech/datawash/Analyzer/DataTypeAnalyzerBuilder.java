@@ -12,14 +12,14 @@ import java.util.*;
 public class DataTypeAnalyzerBuilder {
   private static final Logger LOGGER = LoggerFactory.getLogger(DataTypeAnalyzerBuilder.class);
   
-  private final Collection<List<Class>> hierarchies = new LinkedList<>();
-  private final Map<Class, DataTypeScanner> scanners = new HashMap<>();
-  private final Map<String, Collection<List<Class>>> columnHierarchies = new HashMap<>();
-  private final Map<String, Map<Class, DataTypeScanner>> columnScanners = new HashMap<>();
-  private final Map<String, Double> columnTolerances = new HashMap<>();
-  private final Map<String, Boolean> columnNullable = new HashMap<>();
-  private Double tolerance = 0.0;
-  private Boolean nullable = true;
+  private final Collection<List<Class>>                  hierarchies       = new LinkedList<>();
+  private final Map<Class, DataTypeScanner>              scanners          = new HashMap<>();
+  private final Map<String, Collection<List<Class>>>     columnHierarchies = new HashMap<>();
+  private final Map<String, Map<Class, DataTypeScanner>> columnScanners    = new HashMap<>();
+  private final Map<String, Double>                      columnTolerances  = new HashMap<>();
+  private final Map<String, Boolean>                     columnNullable    = new HashMap<>();
+  private       Double                                   tolerance         = 0.0;
+  private       Boolean                                  nullable          = true;
   
   
   public DataTypeAnalyzerBuilder() {

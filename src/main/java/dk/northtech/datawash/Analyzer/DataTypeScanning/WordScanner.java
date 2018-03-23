@@ -9,8 +9,8 @@ import java.util.regex.Pattern;
 
 @ParametersAreNonnullByDefault
 public class WordScanner extends DataTypeScanner<WordScanner.Word> {
-  private static final Logger LOGGER = LoggerFactory.getLogger(WordScanner.class);
-  private StringScanner stringScanner = null;
+  private static final Logger        LOGGER        = LoggerFactory.getLogger(WordScanner.class);
+  private              StringScanner stringScanner = null;
   
   
   @Override
@@ -19,9 +19,9 @@ public class WordScanner extends DataTypeScanner<WordScanner.Word> {
       stringScanner = new StringScanner();
     }
     if (stringScanner.scan(value)) {
-      String valueAsString = stringScanner.convert(value);
-      Pattern pattern = Pattern.compile("$\\w+^");
-      Matcher matcher = pattern.matcher(valueAsString);
+      String  valueAsString = stringScanner.convert(value);
+      Pattern pattern       = Pattern.compile("$\\w+^");
+      Matcher matcher       = pattern.matcher(valueAsString);
       
       return matcher.find();
     }

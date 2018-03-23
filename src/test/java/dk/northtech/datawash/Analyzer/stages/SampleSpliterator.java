@@ -4,20 +4,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Spliterator;
 import java.util.function.Consumer;
 
 @ParametersAreNonnullByDefault
-public class SampleSpliterator implements Spliterator<Map<String, Object>> {
+class SampleSpliterator implements Spliterator<Map<String, Object>> {
   private static final Logger LOGGER = LoggerFactory.getLogger(SampleSpliterator.class);
   
   Long remainingElements;
   Map<String, Object> templateRow = new HashMap<>();
   
-  SampleSpliterator() {  }
+  SampleSpliterator() {
+  }
   
   private SampleSpliterator(Long remainingElements, Map<String, Object> templateRow) {
     this.remainingElements = remainingElements;

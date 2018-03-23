@@ -25,7 +25,8 @@ public class AnalyzerOutcome<SELF extends AnalyzerOutcome<SELF>> extends Stage<S
     return self();
   }
   
-  public SELF the_number_of_values_in_column_$_which_are_assignable_to_class_$_is_$(String columnName, Class wantedClass, int number) {
+  public SELF the_number_of_values_in_column_$_which_are_assignable_to_class_$_is_$(String columnName, Class
+    wantedClass, int number) {
     // TODO: This should be picked up from the result:
     int count = result.getAmountOfType(columnName, wantedClass);
     assertThat(count).isEqualTo(number);

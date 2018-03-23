@@ -8,7 +8,10 @@ import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
@@ -66,7 +69,8 @@ public class DataState<SELF extends DataState<SELF>> extends Stage<SELF> {
     return self();
   }
   
-  public SELF the_list_contains_object(String k1, @Nullable Object v1, String k2, @Nullable Object v2, String k3, @Nullable Object v3) {
+  public SELF the_list_contains_object(String k1, @Nullable Object v1, String k2, @Nullable Object v2, String k3,
+                                       @Nullable Object v3) {
     Map<String, Object> o = new HashMap<>();
     o.put(k1, v1);
     o.put(k2, v2);
@@ -86,8 +90,9 @@ public class DataState<SELF extends DataState<SELF>> extends Stage<SELF> {
   
   
   /**
-   @param vk must be even amount
-   @return
+   * @param vk must be even amount
+   *
+   * @return
    */
   public SELF the_list_contains_object(@Nullable Object... vk) {
     checkArgument(vk.length % 2 == 0, "must be even amount of arguments");

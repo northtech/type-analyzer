@@ -19,9 +19,9 @@ public class IntegerScanner extends DataTypeScanner<Integer> {
       return true;
     }
     
-    Number valueAsNumber = null;
+    Number  valueAsNumber  = null;
     Integer valueAsInteger = null;
-    Double valueAsDouble = null;
+    Double  valueAsDouble  = null;
     
     try {
       valueAsNumber = (Number) value;
@@ -38,8 +38,8 @@ public class IntegerScanner extends DataTypeScanner<Integer> {
     }
     
     CharSequence valueAsCharSequence = null;
-    String valueAsString = null;
-    Integer parsedInteger = null;
+    String       valueAsString       = null;
+    Integer      parsedInteger       = null;
     
     try {
       valueAsCharSequence = (CharSequence) value;

@@ -7,25 +7,24 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @ParametersAreNonnullByDefault
 public class ColumnResult {
   private static final Logger LOGGER = LoggerFactory.getLogger(ColumnResult.class);
   
-  final String columnId;
+  final String  columnId;
   final Integer totalCount;
   final Integer nullCount;
-  final Map<Class, Integer> typeCounts = new HashMap<>();
-  final Map<Class, Double> confidences = new HashMap<>();
-  final Double tolerance;
+  final Map<Class, Integer> typeCounts  = new HashMap<>();
+  final Map<Class, Double>  confidences = new HashMap<>();
+  final Double  tolerance;
   final Boolean nullable;
-  final Class bestFit;
+  final Class   bestFit;
   
   ColumnResult(String columnId,
                Integer totalCount,
                Integer nullCount,
-               Map<Class, AtomicInteger> typeCounts,
+               Map<Class, Integer> typeCounts,
                Map<Class, Double> confidences,
                @Nullable Class bestFit,
                Double tolerance,
@@ -34,7 +33,7 @@ public class ColumnResult {
     this.columnId = columnId;
     this.totalCount = totalCount;
     this.nullCount = nullCount;
-    typeCounts.keySet().forEach(k -> this.typeCounts.put(k, typeCounts.get(k).get()));
+    typeCounts.keySet().forEach(k -> this.typeCounts.put(k, typeCounts.get(k)));
     this.confidences.putAll(confidences);
     this.tolerance = tolerance;
     this.nullable = nullable;
