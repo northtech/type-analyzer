@@ -10,6 +10,9 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Stream;
 
+/**
+ * An analyzer for finding out what type of data each column in a data set contains.
+ */
 @ParametersAreNonnullByDefault
 public class DataTypeAnalyzer {
   private static final Logger LOGGER = LoggerFactory.getLogger(DataTypeAnalyzer.class);
@@ -43,6 +46,8 @@ public class DataTypeAnalyzer {
   }
   
   /**
+   * Analyze a {@code Collection} of data.
+   *
    * @param dataCollection a Collection of Maps from String to Object, each Map representing a row in the data
    *
    * @return immutable result object
@@ -52,6 +57,8 @@ public class DataTypeAnalyzer {
   }
   
   /**
+   * Analyze a {@code Stream} of data.
+   *
    * @param dataStream a Stream of Maps from String to Object, each Map representing a row in the data
    *
    * @return immutable result object
@@ -160,8 +167,9 @@ public class DataTypeAnalyzer {
     final Boolean localNullable  = this.columnNullable.getOrDefault(columnId, this.nullable);
     final Double  localTolerance = this.columnTolerance.getOrDefault(columnId, this.tolerance);
     
-    final Collection<List<Class>> localHierarchies = this.columnHierarchies.getOrDefault(columnId, new LinkedList<>());
-    final Map<Class, DataTypeScanner> localScanners = this.columnScanners.getOrDefault(columnId, new HashMap<>());
+    final Collection<List<Class>>     localHierarchies =
+      this.columnHierarchies.getOrDefault(columnId, new LinkedList<>());
+    final Map<Class, DataTypeScanner> localScanners    = this.columnScanners.getOrDefault(columnId, new HashMap<>());
     
     localHierarchies.addAll(this.hierarchies);
     localScanners.putAll(this.scanners);

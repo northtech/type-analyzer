@@ -58,7 +58,7 @@ public class DataTypeAnalyzerBuilder {
    * For a specific column, specify a {@code DataTypeScanner} to use for a specific data type.
    *
    * @param columnId specific column ID this scanner will apply to.
-   * @param scanner the scanner object that will be used to scan for this data type.
+   * @param scanner  the scanner object that will be used to scan for this data type.
    *
    * @return this object, to be able to chain method calls.
    */
@@ -111,7 +111,7 @@ public class DataTypeAnalyzerBuilder {
    * For a specific column, set the allowed fraction which the amount of values of a certain type are allowed to differ
    * from 100%.
    *
-   * @param columnId the specific column this setting will apply to.
+   * @param columnId  the specific column this setting will apply to.
    * @param tolerance the amount of variance the analyzer will allow and still pick a certain data type as the best fit.
    *                  A number between 0.0 and 1.0, representing the allowed variance as a fraction. 0.0 is
    *                  zero-tolerance.
@@ -142,7 +142,7 @@ public class DataTypeAnalyzerBuilder {
    * generality. Ie. a data type
    * in the list must always be a super type of any data type that came before it in the same list.
    *
-   * @param columnId the specific column this setting will apply to.
+   * @param columnId  the specific column this setting will apply to.
    * @param hierarchy the hierarchy to scan for.
    *
    * @return this object, to be able to chain method calls.
@@ -171,7 +171,7 @@ public class DataTypeAnalyzerBuilder {
    * in the list must always be a super type of any data type that came before it in the same list.
    *
    * @param columnId the specific column this setting will apply to.
-   * @param types the vararg of types which will be turned into a list.
+   * @param types    the vararg of types which will be turned into a list.
    *
    * @return this object, to be able to chain method calls.
    */
@@ -182,7 +182,9 @@ public class DataTypeAnalyzerBuilder {
   }
   
   /**
-   * @return a DataTypeAnalyzer configured with this DataTypeAnalyzerBuilder's properties
+   * Finally build your {@code DataTypeAnalyzer}
+   *
+   * @return a {@code DataTypeAnalyzer} configured with this {@code DataTypeAnalyzerBuilder}'s properties.
    */
   public DataTypeAnalyzer build() {
     if (this.hierarchies.isEmpty()) {
