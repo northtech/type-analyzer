@@ -24,18 +24,18 @@ public class DatawashTest extends ScenarioTest<AnalyzerState<?>, AnalyzerActions
   @Test
   @Tag("slow")
   void handlesHugeDataStream() {
-    given().a_spliterator_of_Map_objects().and().the_spliterator_produces_rows_containing_object("col0", 0).and()
-           .the_spliterator_produces_rows_containing_object("col1", 1).and()
-           .the_spliterator_produces_rows_containing_object("col2", 2).and()
-           .the_spliterator_produces_rows_containing_object("col3", 3).and()
-           .the_spliterator_produces_rows_containing_object("col4", 4).and()
-           .the_spliterator_produces_rows_containing_object("col5", 5).and()
-           .the_spliterator_produces_rows_containing_object("col6", 6).and()
-           .the_spliterator_produces_rows_containing_object("col7", 7).and()
-           .the_spliterator_produces_rows_containing_object("col8", 8).and()
-           .the_spliterator_produces_rows_containing_object("col9", 9).and()
+    given().a_spliterator_of_Map_objects().and().the_spliterator_produces_rows_containing_key_value_pair("col0", 0).and()
+           .the_spliterator_produces_rows_containing_key_value_pair("col1", 1).and()
+           .the_spliterator_produces_rows_containing_key_value_pair("col2", 2).and()
+           .the_spliterator_produces_rows_containing_key_value_pair("col3", 3).and()
+           .the_spliterator_produces_rows_containing_key_value_pair("col4", 4).and()
+           .the_spliterator_produces_rows_containing_key_value_pair("col5", 5).and()
+           .the_spliterator_produces_rows_containing_key_value_pair("col6", 6).and()
+           .the_spliterator_produces_rows_containing_key_value_pair("col7", 7).and()
+           .the_spliterator_produces_rows_containing_key_value_pair("col8", 8).and()
+           .the_spliterator_produces_rows_containing_key_value_pair("col9", 9).and()
            .the_spliterator_produces_$_elements(1_000_000L).and().the_spliterator_is_turned_into_a_Stream()
-    
+
            .and().the_analyzer_recognizes(Integer.class, Double.class).and().the_analyzer_is_instantiated();
     when().the_stream_is_analyzed();
     then().the_result_contains_columns("col0", "col1", "col2", "col3", "col4", "col5", "col6", "col7", "col8", "col9");

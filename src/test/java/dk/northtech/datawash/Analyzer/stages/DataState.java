@@ -34,7 +34,7 @@ public class DataState<SELF extends DataState<SELF>> extends Stage<SELF> {
     return self();
   }
   
-  public SELF the_spliterator_produces_rows_containing_object(String k, @Nullable Object v) {
+  public SELF the_spliterator_produces_rows_containing_key_value_pair(String k, @Nullable Object v) {
     spliterator.templateRow.put(k, v);
     return self();
   }
