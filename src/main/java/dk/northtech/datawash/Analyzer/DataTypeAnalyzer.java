@@ -43,7 +43,7 @@ public class DataTypeAnalyzer {
   }
   
   /**
-   * @param dataCollection A Collection of Maps from String to Object, each Map represents a row in the data
+   * @param dataCollection a Collection of Maps from String to Object, each Map representing a row in the data
    *
    * @return immutable result object
    */
@@ -52,7 +52,7 @@ public class DataTypeAnalyzer {
   }
   
   /**
-   * @param dataStream a Stream of Maps from String to Object, each Map represents a row in the data
+   * @param dataStream a Stream of Maps from String to Object, each Map representing a row in the data
    *
    * @return immutable result object
    */
@@ -156,7 +156,6 @@ public class DataTypeAnalyzer {
   //  }
   
   private ColumnAnalyzer createColumnAnalyzer(final String columnId) {
-    LOGGER.debug("Creating ColumnAnalyzer for column: {}", columnId);
     
     final Boolean localNullable  = this.columnNullable.getOrDefault(columnId, this.nullable);
     final Double  localTolerance = this.columnTolerance.getOrDefault(columnId, this.tolerance);

@@ -8,6 +8,11 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.time.Instant;
 import java.util.*;
 
+import static com.google.common.base.Preconditions.checkArgument;
+
+/**
+ * A mutable builder for configuring DataTypeAnalyzer objects.
+ */
 @ParametersAreNonnullByDefault
 public class DataTypeAnalyzerBuilder {
   private static final Logger LOGGER = LoggerFactory.getLogger(DataTypeAnalyzerBuilder.class);
@@ -37,58 +42,148 @@ public class DataTypeAnalyzerBuilder {
     scanners.put(WordScanner.Word.class, new WordScanner());
   }
   
-  public DataTypeAnalyzerBuilder setScanner(Class type, DataTypeScanner scanner) {
-    scanners.put(type, scanner);
+  /**
+   * Specify a {@code DataTypeScanner} to use for a specific data type.
+   *
+   * @param scanner the scanner object that will be used to scan for this data type
+   *
+   * @return this object, to be able to chain method calls.
+   */
+  public DataTypeAnalyzerBuilder setScanner(DataTypeScanner scanner) {
+    scanners.put(scanner.getType(), scanner);
     return this;
   }
   
-  public DataTypeAnalyzerBuilder setScanner(String columnId, Class type, DataTypeScanner scanner) {
-    columnScanners.getOrDefault(columnId, new HashMap<>()).put(type, scanner);
+  /**
+   * For a specific column, specify a {@code DataTypeScanner} to use for a specific data type.
+   *
+   * @param columnId specific column ID this scanner will apply to.
+   * @param scanner the scanner object that will be used to scan for this data type.
+   *
+   * @return this object, to be able to chain method calls.
+   */
+  public DataTypeAnalyzerBuilder setScanner(String columnId, DataTypeScanner scanner) {
+    columnScanners.getOrDefault(columnId, new HashMap<>()).put(scanner.getType(), scanner);
     return this;
   }
   
+  /**
+   * Set whether values are nullable or not.
+   *
+   * @param nullable whether or not to accept null values as instances of data types.
+   *
+   * @return this object, to be able to chain method calls..
+   */
   public DataTypeAnalyzerBuilder allowNullable(Boolean nullable) {
     this.nullable = nullable;
     return this;
   }
   
+  /**
+   * For a specific column, set whether values are nullable or not.
+   *
+   * @param columnId the specific column this setting will apply to.
+   * @param nullable whether or not to accept null values as instances of data types for this column.
+   *
+   * @return this object, to be able to chain method calls.
+   */
   public DataTypeAnalyzerBuilder allowNullable(String columnId, Boolean nullable) {
     columnNullable.put(columnId, nullable);
     return this;
   }
   
+  /**
+   * Set the allowed fraction which the amount of values of a certain type are allowed to differ from 100%.
+   *
+   * @param tolerance the amount of variance the analyzer will allow and still pick a certain data type as the best fit.
+   *                  A number between 0.0 and 1.0, representing the allowed variance as a fraction. 0.0 is
+   *                  zero-tolerance.
+   *
+   * @return this object, to be able to chain method calls.
+   */
   public DataTypeAnalyzerBuilder setTolerance(Double tolerance) {
+    checkArgument(tolerance <= 1.0 && tolerance >= 0);
     this.tolerance = tolerance;
     return this;
   }
   
+  /**
+   * For a specific column, set the allowed fraction which the amount of values of a certain type are allowed to differ
+   * from 100%.
+   *
+   * @param columnId the specific column this setting will apply to.
+   * @param tolerance the amount of variance the analyzer will allow and still pick a certain data type as the best fit.
+   *                  A number between 0.0 and 1.0, representing the allowed variance as a fraction. 0.0 is
+   *                  zero-tolerance.
+   *
+   * @return this object, to be able to chain method calls.
+   */
   public DataTypeAnalyzerBuilder setTolerance(String columnId, Double tolerance) {
+    checkArgument(tolerance <= 1.0 && tolerance >= 0);
     columnTolerances.put(columnId, tolerance);
     return this;
   }
   
+  /**
+   * Add a list of data types to scan for. The list must be in sorted order of ascending generality. Ie. a data type
+   * in the list must always be a super type of any data type that came before it in the same list.
+   *
+   * @param hierarchy the hierarchy to scan for.
+   *
+   * @return this object, to be able to chain method calls.
+   */
   public DataTypeAnalyzerBuilder addHierarchy(List<Class> hierarchy) {
     this.hierarchies.add(hierarchy);
     return this;
   }
   
+  /**
+   * For a specific column, add a list of data types to scan for. The list must be in sorted order of ascending
+   * generality. Ie. a data type
+   * in the list must always be a super type of any data type that came before it in the same list.
+   *
+   * @param columnId the specific column this setting will apply to.
+   * @param hierarchy the hierarchy to scan for.
+   *
+   * @return this object, to be able to chain method calls.
+   */
   public DataTypeAnalyzerBuilder addHierarchy(String columnId, List<Class> hierarchy) {
     columnHierarchies.putIfAbsent(columnId, new LinkedList<>());
     columnHierarchies.get(columnId).add(hierarchy);
     return this;
   }
   
+  /**
+   * Add a list of data types to scan for. The list must be in sorted order of ascending generality. Ie. a data type
+   * in the list must always be a super type of any data type that came before it in the same list.
+   *
+   * @param types the vararg of types which will be turned into a list.
+   *
+   * @return this object, to be able to chain method calls.
+   */
   public DataTypeAnalyzerBuilder addHierarchy(Class... types) {
     this.hierarchies.add(Arrays.asList(types));
     return this;
   }
   
+  /**
+   * Add a list of data types to scan for. The list must be in sorted order of ascending generality. Ie. a data type
+   * in the list must always be a super type of any data type that came before it in the same list.
+   *
+   * @param columnId the specific column this setting will apply to.
+   * @param types the vararg of types which will be turned into a list.
+   *
+   * @return this object, to be able to chain method calls.
+   */
   public DataTypeAnalyzerBuilder addHierarchy(String columnId, Class... types) {
     columnHierarchies.putIfAbsent(columnId, new LinkedList<>());
     columnHierarchies.get(columnId).add(Arrays.asList(types));
     return this;
   }
   
+  /**
+   * @return a DataTypeAnalyzer configured with this DataTypeAnalyzerBuilder's properties
+   */
   public DataTypeAnalyzer build() {
     if (this.hierarchies.isEmpty()) {
       throw new IllegalStateException("Builder has not been supplied with a hierarchy of types to scan for");

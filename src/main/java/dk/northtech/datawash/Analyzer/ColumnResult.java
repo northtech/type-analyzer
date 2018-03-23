@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @ParametersAreNonnullByDefault
-public class ColumnResult {
+class ColumnResult {
   private static final Logger LOGGER = LoggerFactory.getLogger(ColumnResult.class);
   
   final String  columnId;

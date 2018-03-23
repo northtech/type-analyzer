@@ -9,10 +9,10 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @ParametersAreNonnullByDefault
-public class ConcurrentColumnAnalyzer implements ColumnAnalyzerInterface {
+class ConcurrentColumnAnalyzer implements ColumnAnalyzerInterface {
   private static final Logger LOGGER = LoggerFactory.getLogger(ConcurrentColumnAnalyzer.class);
   
-  private static final Integer CORES = 1;//Runtime.getRuntime().availableProcessors();
+  private static final Integer CORES = Runtime.getRuntime().availableProcessors();
   
   static {
     LOGGER.info("Using {} core(s)", CORES);
