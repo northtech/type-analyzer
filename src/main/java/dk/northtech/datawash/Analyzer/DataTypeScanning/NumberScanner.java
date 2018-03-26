@@ -1,5 +1,6 @@
 package dk.northtech.datawash.Analyzer.DataTypeScanning;
 
+import dk.northtech.datawash.Analyzer.DataTypeScanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,7 +16,7 @@ public class NumberScanner implements DataTypeScanner {
     if (value instanceof Number) {
       return true;
     }
-  
+    
     try {
       Number valueAsNumber = (Number) value;
       

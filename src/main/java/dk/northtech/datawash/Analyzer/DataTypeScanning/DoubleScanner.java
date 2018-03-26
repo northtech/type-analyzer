@@ -1,5 +1,6 @@
 package dk.northtech.datawash.Analyzer.DataTypeScanning;
 
+import dk.northtech.datawash.Analyzer.DataTypeScanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,8 +18,8 @@ public class DoubleScanner implements DataTypeScanner {
     }
     
     try {
-      Number  valueAsNumber;
-      Double  valueAsDouble;
+      Number valueAsNumber;
+      Double valueAsDouble;
       
       valueAsNumber = (Number) value;
       valueAsDouble = valueAsNumber.doubleValue();
@@ -30,20 +31,20 @@ public class DoubleScanner implements DataTypeScanner {
     catch (ClassCastException cce) {
     
     }
-  
+    
     try {
       CharSequence valueAsCharSequence;
       String       valueAsString;
-    
+      
       valueAsCharSequence = (CharSequence) value;
       valueAsString = valueAsCharSequence.toString();
-    
-    
+      
+      
       Double.parseDouble(valueAsString);
-    
+      
       return true; // wont be reached if .parseDouble() throws exception
-    
-    
+      
+      
     }
     catch (RuntimeException re) {
     

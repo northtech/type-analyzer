@@ -1,4 +1,4 @@
-package dk.northtech.datawash.Analyzer.DataTypeScanning;
+package dk.northtech.datawash.Analyzer;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 

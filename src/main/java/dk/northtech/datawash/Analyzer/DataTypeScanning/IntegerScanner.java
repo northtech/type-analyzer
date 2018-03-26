@@ -1,5 +1,6 @@
 package dk.northtech.datawash.Analyzer.DataTypeScanning;
 
+import dk.northtech.datawash.Analyzer.DataTypeScanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,10 +40,10 @@ public class IntegerScanner implements DataTypeScanner {
       
       valueAsCharSequence = (CharSequence) value;
       valueAsString = valueAsCharSequence.toString();
-  
-
+      
+      
       Integer.parseInt(valueAsString);
-  
+      
       return true; // wont be reached if .parseInt() throws exception
       
       

@@ -1,5 +1,6 @@
 package dk.northtech.datawash.Analyzer.DataTypeScanning;
 
+import dk.northtech.datawash.Analyzer.DataTypeScanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,11 +15,11 @@ public class VejdirektoratetBooleanScanner implements DataTypeScanner {
     if (value instanceof Boolean) {
       return true;
     }
-  
+    
     try {
       Integer valueAsInteger;
       valueAsInteger = (Integer) value;
-    
+      
       if (valueAsInteger.equals(1) || valueAsInteger.equals(2)) {
         return true;
       }
@@ -26,13 +27,13 @@ public class VejdirektoratetBooleanScanner implements DataTypeScanner {
     catch (ClassCastException cce) {
     
     }
-  
+    
     String valueAsString = value.toString();
-  
+    
     if (Boolean.parseBoolean(valueAsString)) {
       return true;
     }
-  
+    
     return false;
   }
   

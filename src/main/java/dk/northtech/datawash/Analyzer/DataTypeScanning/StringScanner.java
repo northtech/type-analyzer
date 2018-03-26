@@ -1,5 +1,6 @@
 package dk.northtech.datawash.Analyzer.DataTypeScanning;
 
+import dk.northtech.datawash.Analyzer.DataTypeScanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +19,7 @@ public class StringScanner implements DataTypeScanner {
     
     try {
       CharSequence valueAsCharSequence = (CharSequence) value;
-      String valueAsString = valueAsCharSequence.toString();
+      String       valueAsString       = valueAsCharSequence.toString();
       
       if (value.toString().equals(valueAsString)) {
         return true;

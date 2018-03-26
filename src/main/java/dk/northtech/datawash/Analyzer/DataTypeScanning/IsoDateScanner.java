@@ -1,5 +1,6 @@
 package dk.northtech.datawash.Analyzer.DataTypeScanning;
 
+import dk.northtech.datawash.Analyzer.DataTypeScanner;
 import dk.northtech.gsonextensions.javatypes.temporal.InstantTypeAdapterFactory;
 import dk.northtech.gsonextensions.javatypes.temporal.ZonedDateTimeTypeAdapterFactory;
 import org.slf4j.Logger;

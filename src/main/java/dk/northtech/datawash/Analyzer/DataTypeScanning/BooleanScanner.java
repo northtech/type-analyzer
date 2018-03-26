@@ -1,5 +1,6 @@
 package dk.northtech.datawash.Analyzer.DataTypeScanning;
 
+import dk.northtech.datawash.Analyzer.DataTypeScanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +19,7 @@ public class BooleanScanner implements DataTypeScanner {
     try {
       Integer valueAsInteger;
       valueAsInteger = (Integer) value;
-  
+      
       if (valueAsInteger.equals(0) || valueAsInteger.equals(1)) {
         return true;
       }
