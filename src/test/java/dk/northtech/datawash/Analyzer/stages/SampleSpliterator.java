@@ -12,11 +12,11 @@ import java.util.function.Consumer;
 @ParametersAreNonnullByDefault
 class SampleSpliterator implements Spliterator<Map<String, Object>> {
   private static final Logger LOGGER = LoggerFactory.getLogger(SampleSpliterator.class);
-  
+  final Map<String, Object> templateRow;
   Long remainingElements;
-  Map<String, Object> templateRow = new HashMap<>();
   
   SampleSpliterator() {
+    templateRow = new HashMap<>();
   }
   
   private SampleSpliterator(Long remainingElements, Map<String, Object> templateRow) {
@@ -29,7 +29,7 @@ class SampleSpliterator implements Spliterator<Map<String, Object>> {
     if (remainingElements > 0) {
       
       Map<String, Object> row = new HashMap<>();
-      templateRow.keySet().forEach(k -> row.put(k, templateRow.get(k)));
+      row.putAll(templateRow);
       action.accept(row);
       remainingElements--;
       return true;
@@ -42,11 +42,11 @@ class SampleSpliterator implements Spliterator<Map<String, Object>> {
   public Spliterator<Map<String, Object>> trySplit() {
     if (remainingElements >= 2) {
       if (remainingElements % 2 == 0) {
-        this.remainingElements /= 2;
+        remainingElements /= 2;
         return new SampleSpliterator(remainingElements, templateRow);
       }
       else {
-        this.remainingElements /= 2;
+        remainingElements /= 2;
         return new SampleSpliterator(remainingElements + 1, templateRow);
       }
     }

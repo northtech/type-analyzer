@@ -25,7 +25,7 @@ public class AnalyzerState<SELF extends AnalyzerState<SELF>> extends DataState<S
   
   public SELF the_analyzer_is_instantiated() {
     // TODO: This should build the Analyzer object, possibly with some fluent builder for registered scanners
-    this.analyzer = builder.build();
+    analyzer = builder.build();
     return self();
   }
 }

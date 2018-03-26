@@ -39,7 +39,7 @@ public class DataState<SELF extends DataState<SELF>> extends Stage<SELF> {
     return self();
   }
   
-  public SELF the_spliterator_produces_$_elements(Long size) {
+  public SELF the_spliterator_produces_$_rows(Long size) {
     spliterator.remainingElements = size;
     return self();
   }
