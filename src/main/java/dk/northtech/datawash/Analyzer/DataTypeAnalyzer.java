@@ -1,6 +1,5 @@
 package dk.northtech.datawash.Analyzer;
 
-import dk.northtech.datawash.Analyzer.DataTypeScanning.DataTypeScanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -167,9 +166,8 @@ public class DataTypeAnalyzer {
     final Boolean localNullable  = this.columnNullable.getOrDefault(columnId, this.nullable);
     final Double  localTolerance = this.columnTolerance.getOrDefault(columnId, this.tolerance);
     
-    final Collection<List<Class>>     localHierarchies =
-      this.columnHierarchies.getOrDefault(columnId, new LinkedList<>());
-    final Map<Class, DataTypeScanner> localScanners    = this.columnScanners.getOrDefault(columnId, new HashMap<>());
+    final Collection<List<Class>> localHierarchies = this.columnHierarchies.getOrDefault(columnId, new LinkedList<>());
+    final Map<Class, DataTypeScanner> localScanners = this.columnScanners.getOrDefault(columnId, new HashMap<>());
     
     localHierarchies.addAll(this.hierarchies);
     localScanners.putAll(this.scanners);
