@@ -140,7 +140,6 @@ public class DataTypeAnalyzer {
   
   private void analyzeValue(final String columnId, @Nullable final Object value,
                             final Map<String, ColumnAnalyzer> columnAnalyzers) {
-    LOGGER.debug("Analyzing key: {}, value: {}", columnId, value);
     
     columnAnalyzers.computeIfAbsent(columnId, this::createColumnAnalyzer).analyze(value);
   }
