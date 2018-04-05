@@ -69,7 +69,11 @@ public class DataState<SELF extends DataState<SELF>> extends Stage<SELF> {
     return self();
   }
   
-  public SELF the_list_contains_object(String k1, @Nullable Object v1, String k2, @Nullable Object v2, String k3,
+  public SELF the_list_contains_object(String k1,
+                                       @Nullable Object v1,
+                                       String k2,
+                                       @Nullable Object v2,
+                                       String k3,
                                        @Nullable Object v3) {
     Map<String, Object> o = new HashMap<>();
     o.put(k1, v1);

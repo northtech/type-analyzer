@@ -11,8 +11,8 @@ import java.util.function.Consumer;
 
 @ParametersAreNonnullByDefault
 class SampleSpliterator implements Spliterator<Map<String, Object>> {
-  private static final Logger LOGGER = LoggerFactory.getLogger(SampleSpliterator.class);
-  final Map<String, Object> templateRow;
+  private static final Logger              LOGGER = LoggerFactory.getLogger(SampleSpliterator.class);
+  final                Map<String, Object> templateRow;
   Long remainingElements;
   
   SampleSpliterator() {

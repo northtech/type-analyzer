@@ -27,9 +27,13 @@ public class DataTypeAnalyzer {
   private Double  tolerance;
   private Boolean nullable;
   
-  DataTypeAnalyzer(Collection<List<Class>> hierarchies, Map<String, Collection<List<Class>>> columnHierarchies,
-                   Map<Class, DataTypeScanner> scanners, Map<String, Map<Class, DataTypeScanner>> columnScanners,
-                   Double tolerance, Map<String, Double> columnTolerance, Boolean nullable,
+  DataTypeAnalyzer(Collection<List<Class>> hierarchies,
+                   Map<String, Collection<List<Class>>> columnHierarchies,
+                   Map<Class, DataTypeScanner> scanners,
+                   Map<String, Map<Class, DataTypeScanner>> columnScanners,
+                   Double tolerance,
+                   Map<String, Double> columnTolerance,
+                   Boolean nullable,
                    Map<String, Boolean> columnNullable) {
     
     this.hierarchies.addAll(hierarchies);
@@ -112,8 +116,16 @@ public class DataTypeAnalyzer {
       confidences.put(columnResult.columnId, columnResult.confidences);
     });
     
-    return new Result(columnAnalyzers.keySet(), amountOfValues, nullCounts, typeCounts, confidences, bestFits, nullable,
-                      columnNullable, tolerance, columnTolerance);
+    return new Result(columnAnalyzers.keySet(),
+                      amountOfValues,
+                      nullCounts,
+                      typeCounts,
+                      confidences,
+                      bestFits,
+                      nullable,
+                      columnNullable,
+                      tolerance,
+                      columnTolerance);
     //    }
   }
   
@@ -138,7 +150,8 @@ public class DataTypeAnalyzer {
   //    }
   //  }
   
-  private void analyzeValue(final String columnId, @Nullable final Object value,
+  private void analyzeValue(final String columnId,
+                            @Nullable final Object value,
                             final Map<String, ColumnAnalyzer> columnAnalyzers) {
     
     columnAnalyzers.computeIfAbsent(columnId, this::createColumnAnalyzer).analyze(value);

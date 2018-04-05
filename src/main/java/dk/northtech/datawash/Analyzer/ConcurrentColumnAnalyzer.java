@@ -17,15 +17,18 @@ class ConcurrentColumnAnalyzer implements ColumnAnalyzerInterface {
     LOGGER.info("Using {} core(s)", CORES);
   }
   
-  private final String  columnId;
-  private final Double  tolerance;
-  private final Boolean nullable;
+  private final String                  columnId;
+  private final Double                  tolerance;
+  private final Boolean                 nullable;
   private final Collection<List<Class>> hierarchies         = new LinkedList<>();
   private       List<ColumnAnalyzer>    columnAnalyzers     = new ArrayList<>();
   private       Integer                 columnAnalyzerIndex = 0;
   
-  public ConcurrentColumnAnalyzer(String columnId, Collection<List<Class>> hierarchies,
-                                  Map<Class, DataTypeScanner> scanners, Double tolerance, Boolean nullable) {
+  public ConcurrentColumnAnalyzer(String columnId,
+                                  Collection<List<Class>> hierarchies,
+                                  Map<Class, DataTypeScanner> scanners,
+                                  Double tolerance,
+                                  Boolean nullable) {
     this.hierarchies.addAll(hierarchies);
     this.columnId = columnId;
     this.tolerance = tolerance;
@@ -70,7 +73,13 @@ class ConcurrentColumnAnalyzer implements ColumnAnalyzerInterface {
     Map<Class, Double> confidences = calculateConfidences(totalTypeCounts, totalTotalCount);
     Class              bestFit     = getBestFit(confidences);
     
-    return new ColumnResult(columnId, totalTotalCount, totalNullCount, totalTypeCounts, confidences, bestFit, tolerance,
+    return new ColumnResult(columnId,
+                            totalTotalCount,
+                            totalNullCount,
+                            totalTypeCounts,
+                            confidences,
+                            bestFit,
+                            tolerance,
                             nullable);
   }
   

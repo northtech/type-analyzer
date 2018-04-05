@@ -24,30 +24,54 @@ public class DatawashTest extends ScenarioTest<AnalyzerState<?>, AnalyzerActions
   @Test
   @Tag("slow")
   void handlesHugeDataStream() {
-    given().a_spliterator_of_Map_objects().and().the_spliterator_produces_rows_containing_key_value_pair("col0", 0)
-           .and().the_spliterator_produces_rows_containing_key_value_pair("col1", 1).and()
-           .the_spliterator_produces_rows_containing_key_value_pair("col2", 2).and()
-           .the_spliterator_produces_rows_containing_key_value_pair("col3", 3).and()
-           .the_spliterator_produces_rows_containing_key_value_pair("col4", 4).and()
-           .the_spliterator_produces_rows_containing_key_value_pair("col5", 5).and()
-           .the_spliterator_produces_rows_containing_key_value_pair("col6", 6).and()
-           .the_spliterator_produces_rows_containing_key_value_pair("col7", 7).and()
-           .the_spliterator_produces_rows_containing_key_value_pair("col8", 8).and()
-           .the_spliterator_produces_rows_containing_key_value_pair("col9", 9).and()
-           .the_spliterator_produces_$_rows(100_000L).and().the_spliterator_is_turned_into_a_Stream()
-    
-           .and().the_analyzer_recognizes(Integer.class, Double.class).and().the_analyzer_is_instantiated();
+    given()
+      .a_spliterator_of_Map_objects()
+      .and()
+      .the_spliterator_produces_rows_containing_key_value_pair("col0", 0)
+      .and()
+      .the_spliterator_produces_rows_containing_key_value_pair("col1", 1)
+      .and()
+      .the_spliterator_produces_rows_containing_key_value_pair("col2", 2)
+      .and()
+      .the_spliterator_produces_rows_containing_key_value_pair("col3", 3)
+      .and()
+      .the_spliterator_produces_rows_containing_key_value_pair("col4", 4)
+      .and()
+      .the_spliterator_produces_rows_containing_key_value_pair("col5", 5)
+      .and()
+      .the_spliterator_produces_rows_containing_key_value_pair("col6", 6)
+      .and()
+      .the_spliterator_produces_rows_containing_key_value_pair("col7", 7)
+      .and()
+      .the_spliterator_produces_rows_containing_key_value_pair("col8", 8)
+      .and()
+      .the_spliterator_produces_rows_containing_key_value_pair("col9", 9)
+      .and()
+      .the_spliterator_produces_$_rows(100_000L)
+      .and()
+      .the_spliterator_is_turned_into_a_Stream()
+      
+      .and()
+      .the_analyzer_recognizes(Integer.class, Double.class)
+      .and()
+      .the_analyzer_is_instantiated();
     when().the_stream_is_analyzed();
     then().the_result_contains_columns("col0", "col1", "col2", "col3", "col4", "col5", "col6", "col7", "col8", "col9");
   }
   
   @Test
   void aggregatesColumns() {
-    given().a_memory_list_of_Map_objects().and().the_list_contains_object("columnA", 1, "columnB", "Alpha").and()
-           .the_list_contains_object("columnA", 2, "columnC", 2.2)
-    
-           .and().the_analyzer_recognizes(Integer.class, Double.class, String.class).and()
-           .the_analyzer_is_instantiated();
+    given()
+      .a_memory_list_of_Map_objects()
+      .and()
+      .the_list_contains_object("columnA", 1, "columnB", "Alpha")
+      .and()
+      .the_list_contains_object("columnA", 2, "columnC", 2.2)
+      
+      .and()
+      .the_analyzer_recognizes(Integer.class, Double.class, String.class)
+      .and()
+      .the_analyzer_is_instantiated();
     when().the_list_is_analyzed();
     then().the_result_contains_columns("columnA", "columnB", "columnC");
   }
@@ -60,12 +84,21 @@ public class DatawashTest extends ScenarioTest<AnalyzerState<?>, AnalyzerActions
     // for types we're not going to use anyway.
     
     final String columnName = "columnDataType";
-    given().a_memory_list_of_Map_objects().and().the_list_contains_object(columnName, 1).and()
-           .the_list_contains_object(columnName, 2).and().the_list_contains_object(columnName, 3.0).and()
-           .the_list_contains_object(columnName, 4.4)
-    
-           .and().the_analyzer_recognizes(Integer.class, Double.class, String.class).and()
-           .the_analyzer_is_instantiated();
+    given()
+      .a_memory_list_of_Map_objects()
+      .and()
+      .the_list_contains_object(columnName, 1)
+      .and()
+      .the_list_contains_object(columnName, 2)
+      .and()
+      .the_list_contains_object(columnName, 3.0)
+      .and()
+      .the_list_contains_object(columnName, 4.4)
+      
+      .and()
+      .the_analyzer_recognizes(Integer.class, Double.class, String.class)
+      .and()
+      .the_analyzer_is_instantiated();
     when().the_list_is_analyzed();
     then().the_number_of_values_in_column_$_which_are_assignable_to_class_$_is_$(columnName, Integer.class, 3);
   }
@@ -74,10 +107,19 @@ public class DatawashTest extends ScenarioTest<AnalyzerState<?>, AnalyzerActions
   void findsBestDataType() {
     
     final String columnName = "bestDataType";
-    given().a_memory_list_of_Map_objects().and().the_list_contains_object(columnName, 1).and()
-           .the_list_contains_object(columnName, 2).and().the_list_contains_object(columnName, 3.0)
-    
-           .and().the_analyzer_recognizes(Integer.class, Double.class).and().the_analyzer_is_instantiated();
+    given()
+      .a_memory_list_of_Map_objects()
+      .and()
+      .the_list_contains_object(columnName, 1)
+      .and()
+      .the_list_contains_object(columnName, 2)
+      .and()
+      .the_list_contains_object(columnName, 3.0)
+      
+      .and()
+      .the_analyzer_recognizes(Integer.class, Double.class)
+      .and()
+      .the_analyzer_is_instantiated();
     when().the_list_is_analyzed();
     then().the_best_type_for_column_$_is_$(columnName, Integer.class);
   }
@@ -91,13 +133,23 @@ public class DatawashTest extends ScenarioTest<AnalyzerState<?>, AnalyzerActions
     // of it already.
     
     final String columnName = "IsoDates";
-    given().a_memory_list_of_Map_objects().and().the_list_contains_object(columnName, "2018-03-12").and()
-           .the_list_contains_object(columnName, "2018-03-12T20:36:39.200Z").and()
-           .the_list_contains_object(columnName, "2018-03-12T21:36:39.200+0100").and()
-           .the_list_contains_object(columnName, "Supercalifragilisticexpialidocious").and()
-           .the_list_contains_object(columnName, null)
-    
-           .and().the_analyzer_recognizes(Instant.class, String.class).and().the_analyzer_is_instantiated();
+    given()
+      .a_memory_list_of_Map_objects()
+      .and()
+      .the_list_contains_object(columnName, "2018-03-12")
+      .and()
+      .the_list_contains_object(columnName, "2018-03-12T20:36:39.200Z")
+      .and()
+      .the_list_contains_object(columnName, "2018-03-12T21:36:39.200+0100")
+      .and()
+      .the_list_contains_object(columnName, "Supercalifragilisticexpialidocious")
+      .and()
+      .the_list_contains_object(columnName, null)
+      
+      .and()
+      .the_analyzer_recognizes(Instant.class, String.class)
+      .and()
+      .the_analyzer_is_instantiated();
     when().the_list_is_analyzed();
     then().the_number_of_values_in_column_$_which_are_assignable_to_class_$_is_$(columnName, Instant.class, 3)
           // Arguably, it is not good style to test for two things at the same time, but on the other hand,

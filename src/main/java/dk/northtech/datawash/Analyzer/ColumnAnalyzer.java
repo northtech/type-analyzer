@@ -25,8 +25,11 @@ class ColumnAnalyzer implements ColumnAnalyzerInterface {
   private AtomicInteger nullCount  = new AtomicInteger(0);
   
   
-  ColumnAnalyzer(String columnId, Collection<List<Class>> hierarchies, Map<Class, DataTypeScanner> scanners,
-                 Double tolerance, Boolean nullable) {
+  ColumnAnalyzer(String columnId,
+                 Collection<List<Class>> hierarchies,
+                 Map<Class, DataTypeScanner> scanners,
+                 Double tolerance,
+                 Boolean nullable) {
     this.hierarchies.addAll(hierarchies);
     this.scanners.putAll(scanners);
     this.columnId = columnId;
@@ -75,15 +78,23 @@ class ColumnAnalyzer implements ColumnAnalyzerInterface {
     Class bestFit = getBestFit(confidences);
     
     if (bestFit == null) {
-      LOGGER.warn("A best fit was not found for column: {}, with tolerance: {}, and nullable: {}", columnId, tolerance,
+      LOGGER.warn("A best fit was not found for column: {}, with tolerance: {}, and nullable: {}",
+                  columnId,
+                  tolerance,
                   nullable);
     }
     
     Map<Class, Integer> integerTypeCounts = new HashMap<>();
     typeCounts.keySet().stream().forEach(k -> integerTypeCounts.put(k, typeCounts.get(k).get()));
     
-    return new ColumnResult(columnId, totalCount.get(), nullCount.get(), integerTypeCounts, confidences, bestFit,
-                            tolerance, nullable);
+    return new ColumnResult(columnId,
+                            totalCount.get(),
+                            nullCount.get(),
+                            integerTypeCounts,
+                            confidences,
+                            bestFit,
+                            tolerance,
+                            nullable);
   }
   
   private Map<Class, Double> calculateConfidences() {
